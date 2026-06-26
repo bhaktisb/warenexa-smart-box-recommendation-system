@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Recommendations | Tradexa Warehouse{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Recommendations</h1>
+</div>
+
+<div class="card shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>Order</th>
+                    <th>Recommended Box</th>
+                    <th>Total Weight</th>
+                    <th>Status</th>
+                    <th>Confirmed</th>
+                    <th>Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for recommendation in recommendations %}
+                <tr>
+                    <td>
+                        <a href="{% url 'recommendations:detail' recommendation.pk %}">
+                            {{ recommendation.order.order_number }}
+                        </a>
+                    </td>
+                    <td>{{ recommendation.recommended_box.box_code|default:"—" }}</td>
+                    <td>{{ recommendation.total_weight }} kg</td>
+                    <td>
+                        {% if recommendation.status == "success" %}
+                        <span class="badge text-bg-success">Success</span>
+                        {% else %}
+                        <span class="badge text-bg-warning">No Suitable Box</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if recommendation.is_confirmed %}
+                        <span class="badge text-bg-success">Yes</span>
+                        {% else %}
+                        <span class="badge text-bg-secondary">No</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ recommendation.created_at }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6" class="text-muted">No recommendations found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% include "partials/pagination.html" %}
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | Tradexa Warehouse{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h3 mb-1">Warehouse Dashboard</h1>
+        <p class="text-muted mb-0">TechNest Electronics packing operations overview</p>
+    </div>
+    <a href="{% url 'orders:list' %}" class="btn btn-primary">
+        <i class="bi bi-clipboard-check"></i> View Orders
+    </a>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small">Active Products</div>
+                <div class="display-6">{{ product_count }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small">Active Shipping Boxes</div>
+                <div class="display-6">{{ box_count }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small">Pending Orders</div>
+                <div class="display-6">{{ pending_order_count }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small">Successful Recommendations</div>
+                <div class="display-6">{{ successful_recommendation_count }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white fw-semibold">Recent Orders</div>
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Customer</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in recent_orders %}
+                        <tr>
+                            <td><a href="{% url 'orders:detail' order.pk %}">{{ order.order_number }}</a></td>
+                            <td>{{ order.customer_name }}</td>
+                            <td><span class="badge text-bg-secondary">{{ order.get_status_display }}</span></td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="3" class="text-muted">No orders yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white fw-semibold">Recent Recommendations</div>
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Box</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for recommendation in recent_recommendations %}
+                        <tr>
+                            <td><a href="{% url 'orders:detail' recommendation.order.pk %}">{{ recommendation.order.order_number }}</a></td>
+                            <td>{{ recommendation.recommended_box.box_code|default:"—" }}</td>
+                            <td>
+                                {% if recommendation.status == "success" %}
+                                <span class="badge text-bg-success">Success</span>
+                                {% else %}
+                                <span class="badge text-bg-warning">No Box</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="3" class="text-muted">No recommendations yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

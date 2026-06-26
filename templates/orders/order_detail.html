@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}{{ order.order_number }} | Orders{% endblock %}
+
+{% block content %}
+<div class="mb-3">
+    <a href="{% url 'orders:list' %}" class="text-decoration-none">&larr; Back to Orders</a>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <span class="fw-semibold">Order {{ order.order_number }}</span>
+                <span class="badge text-bg-secondary">{{ order.get_status_display }}</span>
+            </div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">Customer</dt>
+                    <dd class="col-sm-8">{{ order.customer_name }}</dd>
+                    <dt class="col-sm-4">Order Date</dt>
+                    <dd class="col-sm-8">{{ order.order_date }}</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-white fw-semibold">Order Items</div>
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Unit Weight</th>
+                            <th>Dimensions (cm)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order.items.all %}
+                        <tr>
+                            <td>{{ item.product.sku }}</td>
+                            <td>{{ item.product.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.product.weight }} kg</td>
+                            <td>{{ item.product.length }} × {{ item.product.width }} × {{ item.product.height }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="5" class="text-muted">No items in this order.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white fw-semibold">Packing Actions</div>
+            <div class="card-body">
+                <p class="text-muted small mb-3">
+                    PAME assumes smaller items pack into void space within the largest product envelope.
+                </p>
+                <form method="post" action="{% url 'orders:recommend' order.pk %}" class="mb-3">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary w-100" {% if order.status == order_status_packed %}disabled{% endif %}>
+                        <i class="bi bi-magic"></i> Recommend Box
+                    </button>
+                </form>
+
+                {% if latest_recommendation %}
+                <div class="border rounded p-3 mb-3 bg-light">
+                    <div class="small text-muted mb-1">Latest Recommendation</div>
+                    {% if latest_recommendation.recommended_box %}
+                    <div class="fw-semibold">{{ latest_recommendation.recommended_box.box_code }}</div>
+                    <div class="small">Cost: ₹{{ latest_recommendation.recommended_box.cost }}</div>
+                    <div class="small">Total Weight: {{ latest_recommendation.total_weight }} kg</div>
+                    <div class="small">
+                        PAME envelope (d₁×d₂×d₃): {{ latest_recommendation.required_length }} ×
+                        {{ latest_recommendation.required_width }} ×
+                        {{ latest_recommendation.required_height }} cm
+                    </div>
+                    {% else %}
+                    <div class="text-warning fw-semibold">{{ latest_recommendation.message }}</div>
+                    {% endif %}
+                    <div class="small text-muted mt-2">{{ latest_recommendation.created_at }}</div>
+                </div>
+                {% endif %}
+
+                <form method="post" action="{% url 'orders:confirm_packing' order.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success w-100"
+                        {% if order.status == order_status_packed or not latest_recommendation.recommended_box %}disabled{% endif %}>
+                        <i class="bi bi-check2-circle"></i> Confirm Packing
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

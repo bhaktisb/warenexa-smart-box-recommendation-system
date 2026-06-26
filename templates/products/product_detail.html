@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.sku }} | Products{% endblock %}
+
+{% block content %}
+<div class="mb-3">
+    <a href="{% url 'products:list' %}" class="text-decoration-none">&larr; Back to Products</a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+                <h1 class="h3">{{ product.name }}</h1>
+                <p class="text-muted mb-0">SKU: {{ product.sku }}</p>
+            </div>
+            {% if product.is_active %}
+            <span class="badge text-bg-success">Active</span>
+            {% else %}
+            <span class="badge text-bg-secondary">Inactive</span>
+            {% endif %}
+        </div>
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Category</dt>
+            <dd class="col-sm-9">{{ product.category }}</dd>
+            <dt class="col-sm-3">Price</dt>
+            <dd class="col-sm-9">₹{{ product.price }}</dd>
+            <dt class="col-sm-3">Dimensions</dt>
+            <dd class="col-sm-9">{{ product.length }} × {{ product.width }} × {{ product.height }} cm</dd>
+            <dt class="col-sm-3">Weight</dt>
+            <dd class="col-sm-9">{{ product.weight }} kg</dd>
+        </dl>
+    </div>
+</div>
+{% endblock %}
