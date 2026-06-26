@@ -1,4 +1,4 @@
-"""Presentation layer views for the warehouse dashboard."""
+"""Presentation layer views for the Warehouse Operations Dashboard."""
 
 from django.views.generic import TemplateView
 

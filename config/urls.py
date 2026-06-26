@@ -4,9 +4,9 @@ from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import include, path
 
-admin.site.site_header = "Tradexa Warehouse Admin"
-admin.site.site_title = "Tradexa Warehouse"
-admin.site.index_title = "Warehouse Packing Administration"
+admin.site.site_header = "WareNexa Warehouse Suite Admin"
+admin.site.site_title = "WareNexa Warehouse Suite"
+admin.site.index_title = "Warehouse Operations Administration"
 
 urlpatterns = [
     path("admin/", admin.site.urls),

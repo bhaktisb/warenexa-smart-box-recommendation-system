@@ -1,6 +1,6 @@
 # Smart Box Recommendation System
 
-Production-oriented Django warehouse packing module for Tradexa Technologies.
+Production-oriented Django module for WareNexa Warehouse Suite, delivered for TechNest Electronics by WareNexa Technologies Pvt. Ltd.
 
 ## Overview
 
@@ -94,7 +94,7 @@ Open:
 Set environment variables before running migrations (see `.env.example`):
 
 ```bash
-set POSTGRES_DB=tradexa_warehouse
+set POSTGRES_DB=warenexa_warehouse
 set POSTGRES_USER=postgres
 set POSTGRES_PASSWORD=postgres
 set POSTGRES_HOST=localhost

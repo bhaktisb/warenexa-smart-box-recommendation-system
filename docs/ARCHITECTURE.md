@@ -1,8 +1,9 @@
 # Architecture Documentation
-## Smart Box Recommendation System for Warehouse Management
+## Smart Box Recommendation System for WareNexa Warehouse Suite
 
-**Project:** Tradexa Technologies — Warehouse Packing Module  
-**Client context:** TechNest Electronics (fictional omnichannel retailer)  
+**Company:** WareNexa Technologies Pvt. Ltd.  
+**Project:** Smart Box Recommendation System  
+**Client context:** TechNest Electronics  
 **Version:** 1.0  
 **Document type:** Solution Architecture  
 **Audience:** Engineering reviewers, internship evaluators, operations stakeholders  
@@ -28,7 +29,7 @@
 
 ## 1. High-Level Architecture
 
-The Smart Box Recommendation System is a **server-rendered Django web application** that supports warehouse staff in selecting the most cost-effective shipping carton for an order. It is a **backend operational module**, not a customer-facing e-commerce platform.
+The Smart Box Recommendation System is a **server-rendered Django web application** for WareNexa Warehouse Suite that supports warehouse staff in selecting the most cost-effective shipping carton for an order. It is a **backend operational module**, not a customer-facing e-commerce platform.
 
 At the highest level, the system consists of four cooperating areas:
 
@@ -375,7 +376,7 @@ erDiagram
 
 | Artifact | Responsibility |
 |----------|----------------|
-| `views.py` | Warehouse dashboard with operational metrics |
+| `views.py` | Warehouse Operations Dashboard with operational metrics |
 | `mixins.py` | `StaffRequiredMixin` for access control |
 | `validators.py` | Reusable decimal validators (positive, non-negative) |
 | `models.py` | `ValidatedModel` abstract base (runs `full_clean()` on save) |
@@ -621,11 +622,11 @@ The following extensions are compatible with the frozen architecture and do not 
 |-------------|-------------|
 | REST API | DRF endpoints reusing existing services |
 | Role-based permissions | Packer vs supervisor vs catalog manager |
-| Event bus | Emit `OrderPacked` events to Tradexa omnichannel platform |
+| Event bus | Emit `OrderPacked` events to the WareNexa Warehouse Suite platform |
 | Observability | Prometheus metrics, structured JSON logging, Sentry |
 | CI/CD pipeline | GitHub Actions with lint, test, coverage gates |
 
-### 12.4 Integration (Tradexa platform)
+### 12.4 Integration (WareNexa Warehouse Suite platform)
 
 | Enhancement | Description |
 |-------------|-------------|

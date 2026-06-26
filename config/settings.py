@@ -1,5 +1,5 @@
 """
-Django settings for Smart Box Recommendation System.
+Django settings for the WareNexa Warehouse Suite Smart Box Recommendation System.
 
 Supports SQLite for local development and PostgreSQL for production via
 environment variables.
@@ -89,7 +89,7 @@ if os.environ.get("POSTGRES_DB"):
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.environ.get("POSTGRES_DB", "tradexa_warehouse"),
+            "NAME": os.environ.get("POSTGRES_DB", "warenexa_warehouse"),
             "USER": os.environ.get("POSTGRES_USER", "postgres"),
             "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "postgres"),
             "HOST": os.environ.get("POSTGRES_HOST", "localhost"),

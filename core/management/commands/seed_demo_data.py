@@ -1,4 +1,4 @@
-"""Load TechNest Electronics catalog, shipping boxes, and sample orders."""
+"""Load the TechNest Electronics catalog, shipping boxes, and sample orders for WareNexa Warehouse Suite."""
 
 from datetime import date
 from decimal import Decimal
@@ -275,7 +275,7 @@ ORDERS = [
 
 
 class Command(BaseCommand):
-    help = "Load TechNest Electronics product catalog, shipping boxes, and sample orders."
+    help = "Load the TechNest Electronics product catalog, shipping boxes, and sample orders for WareNexa Warehouse Suite."
 
     def add_arguments(self, parser):
         parser.add_argument(

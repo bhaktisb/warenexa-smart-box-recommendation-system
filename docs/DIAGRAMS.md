@@ -1,7 +1,7 @@
 # UML & Architecture Diagrams
-## Smart Box Recommendation System — Tradexa Warehouse
+## Smart Box Recommendation System — WareNexa Warehouse Suite
 
-All diagrams below are derived **only** from the implemented codebase (`b:\Tradexa`).  
+All diagrams below are derived **only** from the implemented codebase (`b:\WareNexa`).  
 Actors, models, services, views, and workflows not present in code are excluded.
 
 **Legend:** Solid lines = implemented · `DISPATCHED` order status exists in the model but has no service/UI workflow yet.

@@ -1,1 +1,1 @@
-"""Reusable utility helpers for the warehouse packing module."""
+"""Reusable utility helpers for the Smart Box Recommendation System."""
